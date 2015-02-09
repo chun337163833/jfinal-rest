@@ -27,7 +27,7 @@ public class RestKit {
     }
 
     /**
-     * 构建hahdler
+     * 构建handler
      *
      * @param handlers
      */
