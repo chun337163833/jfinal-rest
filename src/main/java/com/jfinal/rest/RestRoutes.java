@@ -43,7 +43,6 @@ class RestRoutes {
         restKeySet.add(key);
     }
 
-
     protected String match(String target, HttpServletRequest request) {
         String key = target;
         if (visitPath != null) {
@@ -57,6 +56,4 @@ class RestRoutes {
         }
         return null;
     }
-
-
 }

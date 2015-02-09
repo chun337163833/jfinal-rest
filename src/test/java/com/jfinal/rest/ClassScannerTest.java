@@ -1,0 +1,22 @@
+package com.jfinal.rest;
+
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
+
+/**
+ * java类扫描器测试
+ * Created by peak on 2015/2/9.
+ */
+public class ClassScannerTest {
+
+    @Test
+    public void test() {
+        List<Class> list = ClassScaner.scan("com.jfinal.rest");
+        System.out.println("list = " + list);
+        assertTrue(list.contains(ClassScannerTest.class));
+    }
+}

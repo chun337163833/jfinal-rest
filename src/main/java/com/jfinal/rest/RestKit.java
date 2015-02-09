@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * RESTful工具类，两个功能：创建路由和Handler
  * Created by peak on 2015/1/30.
  */
 public class RestKit {
