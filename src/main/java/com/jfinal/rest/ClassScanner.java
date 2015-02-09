@@ -8,16 +8,16 @@ import java.util.List;
  * 类扫描器
  * Created by peak on 2015/1/27.
  */
-public class ClassScaner {
+public class ClassScanner {
 
-    private ClassScaner() {
+    private ClassScanner() {
     }
 
     private static ClassLoader classLoader = null;
     private static String classPath = null;
 
     static {
-        classLoader = ClassScaner.class.getClassLoader();
+        classLoader = ClassScanner.class.getClassLoader();
         classPath = classLoader.getResource("").getFile();
         classPath = new File(classPath).getAbsolutePath();
     }

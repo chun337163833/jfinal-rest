@@ -2,7 +2,6 @@ package com.jfinal.rest;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
@@ -15,7 +14,7 @@ public class ClassScannerTest {
 
     @Test
     public void test() {
-        List<Class> list = ClassScaner.scan("com.jfinal.rest");
+        List<Class> list = ClassScanner.scan("com.jfinal.rest");
         System.out.println("list = " + list);
         assertTrue(list.contains(ClassScannerTest.class));
     }
