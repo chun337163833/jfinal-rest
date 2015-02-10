@@ -30,8 +30,8 @@ public class RestHandler extends Handler {
             return;
         }
 
-        target = routes.match(target, request);
-        if (target == null) {
+        String newTarget = routes.match(target, request);
+        if (newTarget == null) {
             if (log.isWarnEnabled()) {
                 String qs = request.getQueryString();
                 log.warn("404 Action Not Found: " + (qs == null ? target : target + "?" + qs));
@@ -41,6 +41,6 @@ public class RestHandler extends Handler {
         }
 
         isHandled[0] = true;
-        nextHandler.handle(target, request, response, isHandled);
+        nextHandler.handle(newTarget, request, response, isHandled);
     }
 }
