@@ -25,17 +25,19 @@ public class RestKit {
     public static void buildRoutes(String visitPath, Routes routes, String pack) {
         RestRoutes restRoutes = new RestRoutes(visitPath, routes);
         //扫描包下的controller
-        List<Class> list = ClassScanner.scan(pack);
-        for (Class clazz : list) {
+        List<Class<?>> list = ClassScanner.scan(pack);
+        for (Class<?> clazz : list) {
             if (!Controller.class.isAssignableFrom(clazz)) {
                 continue;
             }
-            API api = (API) clazz.getAnnotation(API.class);
+            @SuppressWarnings("unchecked")
+            Class<? extends Controller> controllerClass = (Class<? extends Controller>) clazz;
+            API api = clazz.getAnnotation(API.class);
             if (api == null) {
                 continue;
             }
             String restKey = api.value();
-            restRoutes.addRoute(restKey, (Class<? extends Controller>) clazz);
+            restRoutes.addRoute(restKey, controllerClass);
         }
         routesList.add(restRoutes);
     }

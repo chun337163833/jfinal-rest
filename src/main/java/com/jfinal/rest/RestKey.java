@@ -7,11 +7,11 @@ import java.util.*;
  * rest action key
  * Created by peak on 2015/1/23.
  */
-public class RestKey {
+class RestKey {
     private String origin;
     private List<Part> parts;
 
-    public RestKey(String origin) {
+    RestKey(String origin) {
         this.origin = origin;
         if (origin.startsWith("/")) {
             origin = origin.substring(1);

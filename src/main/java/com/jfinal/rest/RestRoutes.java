@@ -17,7 +17,7 @@ class RestRoutes {
     private Routes routes;
     private Set<RestKey> restKeySet = new HashSet<RestKey>();
 
-    public RestRoutes(String visitPath, Routes routes) {
+    RestRoutes(String visitPath, Routes routes) {
         if (!visitPath.startsWith("/")) {
             visitPath = "/" + visitPath;
         }
@@ -28,11 +28,11 @@ class RestRoutes {
         this.routes = routes;
     }
 
-    public String getVisitPath() {
+    String getVisitPath() {
         return visitPath;
     }
 
-    public void addRoute(String restKey, Class<? extends Controller> controllerClass) {
+    void addRoute(String restKey, Class<? extends Controller> controllerClass) {
         if (!restKey.startsWith("/")) {
             restKey = "/" + restKey;
         }
@@ -51,7 +51,7 @@ class RestRoutes {
      * @param request
      * @return
      */
-    protected String match(String target, HttpServletRequest request) {
+    String match(String target, HttpServletRequest request) {
         String key = target;
         if (visitPath != null) {
             key = key.substring(key.length());
