@@ -2,7 +2,9 @@ package com.jfinal.rest;
 
 import com.jfinal.config.Handlers;
 import com.jfinal.config.Routes;
+import com.jfinal.core.Controller;
 
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +25,20 @@ public class RestKit {
      */
     public static void buildRoutes(String visitPath, Routes routes, String pack) {
         RestRoutes restRoutes = new RestRoutes(visitPath, routes);
-        //TODO 扫描包下的controller
+        //扫描包下的controller
+        List<Class> list = ClassScanner.scan(pack);
+        for (Class clazz : list) {
+            if (!Controller.class.isAssignableFrom(clazz)) {
+                continue;
+            }
+            API api = (API) clazz.getAnnotation(API.class);
+            if (api == null) {
+                continue;
+            }
+            String restKey = api.value();
+            restRoutes.addRoute(restKey, clazz);
+        }
+
     }
 
     /**

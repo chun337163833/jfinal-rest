@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
+ * rest action key
  * Created by peak on 2015/1/23.
  */
 public class RestKey {

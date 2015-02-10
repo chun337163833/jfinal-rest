@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * restful路由
  * Created by peak on 2015/1/23.
  */
 class RestRoutes {
