@@ -3,7 +3,7 @@ package com.jfinal.rest;
 import java.lang.annotation.*;
 
 /**
- * 用来标识RESTful controller路径的注解
+ * 放在controller上，配置restful请求路径
  * Created by peak on 2015/2/9.
  */
 @Retention(RetentionPolicy.RUNTIME)

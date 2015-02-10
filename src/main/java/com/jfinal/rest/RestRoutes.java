@@ -44,15 +44,22 @@ class RestRoutes {
         restKeySet.add(key);
     }
 
+    /**
+     * 匹配请求
+     *
+     * @param target
+     * @param request
+     * @return
+     */
     protected String match(String target, HttpServletRequest request) {
         String key = target;
         if (visitPath != null) {
-            target = target.substring(key.length());
+            key = key.substring(key.length());
         }
         for (RestKey restKey : restKeySet) {
-            String t = restKey.match(target, request);
+            String t = restKey.match(key, request);
             if (t != null) {
-                return t;
+                return visitPath + t;
             }
         }
         return null;

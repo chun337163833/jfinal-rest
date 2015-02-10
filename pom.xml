@@ -10,6 +10,14 @@
     <name>jfinal-rest</name>
     <url>http://maven.apache.org</url>
 
+    <developers>
+        <developer>
+            <id>peak</id>
+            <name>台俊峰</name>
+            <email>taijunfeng_it@sina.com</email>
+        </developer>
+    </developers>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>

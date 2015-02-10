@@ -3,10 +3,12 @@ package com.jfinal.rest;
 import com.jfinal.handler.Handler;
 import com.jfinal.log.Logger;
 import com.jfinal.render.RenderFactory;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * restful handler
  * Created by peak on 2015/1/22.
  */
 public class RestHandler extends Handler {
@@ -23,7 +25,7 @@ public class RestHandler extends Handler {
     @Override
     public void handle(String target, HttpServletRequest request, HttpServletResponse response, boolean[] isHandled) {
         String visitPath = routes.getVisitPath();
-        if (visitPath != null && !target.startsWith(visitPath)) {
+        if (!target.startsWith(visitPath)) {
             nextHandler.handle(target, request, response, isHandled);
             return;
         }

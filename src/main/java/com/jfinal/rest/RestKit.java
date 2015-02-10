@@ -4,12 +4,11 @@ import com.jfinal.config.Handlers;
 import com.jfinal.config.Routes;
 import com.jfinal.core.Controller;
 
-import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * RESTful工具类，两个功能：创建路由和Handler
+ * restful请求工具类，两个功能：创建路由和Handler
  * Created by peak on 2015/1/30.
  */
 public class RestKit {
@@ -36,9 +35,9 @@ public class RestKit {
                 continue;
             }
             String restKey = api.value();
-            restRoutes.addRoute(restKey, clazz);
+            restRoutes.addRoute(restKey, (Class<? extends Controller>) clazz);
         }
-
+        routesList.add(restRoutes);
     }
 
     /**

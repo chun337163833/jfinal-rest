@@ -38,139 +38,59 @@ public class RestKey {
      */
     String match(String target, HttpServletRequest request) {
         String method = request.getMethod().toUpperCase();
+        //将target按斜线拆分成数组，用于匹配
         if (target.startsWith("/")) {
             target = target.substring(1);
         }
         String[] arr = target.split("/");
-
+        //url结尾的参数，在controller里可以通过getPara()获得
+        String para = null;
+        if (arr.length == parts.size() + 1) {
+            para = arr[arr.length - 2];
+        } else if (arr.length != parts.size()) {
+            return null;
+        }
+        //逐个部分进行比较
+        Map<String, String> paras = new HashMap<String, String>();
+        for (int i = 0; i < paras.size(); i++) {
+            String str = arr[i];
+            Part part = parts.get(i);
+            if (part.str != null && !part.str.equals(str)) {
+                return null;
+            }
+            paras.put(part.variable, str);
+        }
+        //根据请求方法进行判断
         if ("GET".equals(method)) {
-            return matchGet(arr, request);
+            if (para == null) {
+                return origin + "/get";
+            } else {
+                return origin + "/get/" + para;
+            }
         } else if ("POST".equals(method)) {
-            return matchPost(arr, request);
+            if (para != null) {
+                return null;
+            }
+            return origin + "/post";
         } else if ("PUT".equals(method)) {
-            return matchPut(arr, request);
+            if (para == null) {
+                return null;
+            }
+            return origin + "/put/" + para;
         } else if ("PATCH".equals(method)) {
-            return matchPatch(arr, request);
+            if (para == null) {
+                return null;
+            }
+            return origin + "/patch/" + para;
         } else if ("DELETE".equals(method)) {
-            return matchDelete(arr, request);
+            if (para == null) {
+                return null;
+            }
+            return origin + "/delete/" + para;
         } else {
             return null;
         }
-
     }
-
-    private String matchGet(String[] arr, HttpServletRequest request) {
-        Map<String, String> paras = new HashMap<String, String>();
-        //GET /tickets/:ticketId/messages
-        if (arr.length == parts.size()) {
-            for (int i = 0; i < arr.length; i++) {
-                String str = arr[i];
-                Part part = parts.get(i);
-                if (part.str != null && !part.str.equals(str)) {
-                    return null;
-                }
-                paras.put(part.variable, str);
-            }
-
-            for (Map.Entry<String, String> entry : paras.entrySet()) {
-                request.setAttribute(entry.getKey(), entry.getValue());
-            }
-            return origin + "/get";
-        }
-        if (arr.length != (parts.size() + 1)) {
-            return null;
-        }
-        //GET /tickets/:ticketId/messages/:messagesId
-        for (int i = 0; i < paras.size(); i++) {
-            String str = arr[i];
-            Part part = parts.get(i);
-            if (part.str != null && !part.str.equals(str)) {
-                return null;
-            }
-            paras.put(part.variable, str);
-        }
-        for (Map.Entry<String, String> entry : paras.entrySet()) {
-            request.setAttribute(entry.getKey(), entry.getValue());
-        }
-        return origin + "/get/" + arr[arr.length - 1];
-    }
-
-    private String matchPost(String[] arr, HttpServletRequest request) {
-        Map<String, String> paras = new HashMap<String, String>();
-        if (arr.length != parts.size()) {
-            return null;
-        }
-        for (int i = 0; i < paras.size(); i++) {
-            String str = arr[i];
-            Part part = parts.get(i);
-            if (part.str != null && !part.str.equals(str)) {
-                return null;
-            }
-            paras.put(part.variable, str);
-        }
-        for (Map.Entry<String, String> entry : paras.entrySet()) {
-            request.setAttribute(entry.getKey(), entry.getValue());
-        }
-        return origin + "/post";
-    }
-
-    private String matchPut(String[] arr, HttpServletRequest request) {
-        if (arr.length != (parts.size() + 1)) {
-            return null;
-        }
-        Map<String, String> paras = new HashMap<String, String>();
-        for (int i = 0; i < paras.size(); i++) {
-            String str = arr[i];
-            Part part = parts.get(i);
-            if (part.str != null && !part.str.equals(str)) {
-                return null;
-            }
-            paras.put(part.variable, str);
-        }
-        for (Map.Entry<String, String> entry : paras.entrySet()) {
-            request.setAttribute(entry.getKey(), entry.getValue());
-        }
-        return origin + "/put/" + arr[arr.length - 1];
-    }
-
-    private String matchPatch(String[] arr, HttpServletRequest request) {
-        if (arr.length != (parts.size() + 1)) {
-            return null;
-        }
-        Map<String, String> paras = new HashMap<String, String>();
-        for (int i = 0; i < paras.size(); i++) {
-            String str = arr[i];
-            Part part = parts.get(i);
-            if (part.str != null && !part.str.equals(str)) {
-                return null;
-            }
-            paras.put(part.variable, str);
-        }
-        for (Map.Entry<String, String> entry : paras.entrySet()) {
-            request.setAttribute(entry.getKey(), entry.getValue());
-        }
-        return origin + "/patch/" + arr[arr.length - 1];
-    }
-
-    private String matchDelete(String[] arr, HttpServletRequest request) {
-        if (arr.length != (parts.size() + 1)) {
-            return null;
-        }
-        Map<String, String> paras = new HashMap<String, String>();
-        for (int i = 0; i < paras.size(); i++) {
-            String str = arr[i];
-            Part part = parts.get(i);
-            if (part.str != null && !part.str.equals(str)) {
-                return null;
-            }
-            paras.put(part.variable, str);
-        }
-        for (Map.Entry<String, String> entry : paras.entrySet()) {
-            request.setAttribute(entry.getKey(), entry.getValue());
-        }
-        return origin + "/delete/" + arr[arr.length - 1];
-    }
-
 
     @Override
     public boolean equals(Object obj) {
