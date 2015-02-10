@@ -28,7 +28,7 @@ public class ClassScanner {
      * @param pack 包名
      * @return
      */
-    public static List<Class> scan(String pack) {
+    public static List<Class<?>> scan(String pack) {
         String classPath = classLoader.getResource("").getFile();
         String path = classPath + pack.replace(".", "/");
         File dir = new File(path);
@@ -42,9 +42,12 @@ public class ClassScanner {
         }
     }
 
-    private static List<Class> scan(File dir) throws ClassNotFoundException {
-        List<Class> list = new ArrayList<Class>();
+    private static List<Class<?>> scan(File dir) throws ClassNotFoundException {
+        List<Class<?>> list = new ArrayList<Class<?>>();
         File[] files = dir.listFiles();
+        if (files == null) {
+            return list;
+        }
         for (File file : files) {
             if (file.isFile()) {
                 String filePath = file.getAbsolutePath();
