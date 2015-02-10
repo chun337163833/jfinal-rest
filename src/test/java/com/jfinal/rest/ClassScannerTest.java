@@ -14,7 +14,7 @@ public class ClassScannerTest {
 
     @Test
     public void test() {
-        List<Class> list = ClassScanner.scan("com.jfinal.rest");
+        List<Class<?>> list = ClassScanner.scan("com.jfinal.rest");
         System.out.println("list = " + list);
         assertTrue(list.contains(ClassScannerTest.class));
     }
