@@ -46,19 +46,26 @@ class RestKey {
         //url结尾的参数，在controller里可以通过getPara()获得
         String para = null;
         if (arr.length == parts.size() + 1) {
-            para = arr[arr.length - 2];
+            para = arr[arr.length - 1];
         } else if (arr.length != parts.size()) {
             return null;
         }
         //逐个部分进行比较
         Map<String, String> paras = new HashMap<String, String>();
-        for (int i = 0; i < paras.size(); i++) {
+        for (int i = 0; i < parts.size(); i++) {
             String str = arr[i];
             Part part = parts.get(i);
-            if (part.str != null && !part.str.equals(str)) {
-                return null;
+            if (part.str != null) {
+                if (!part.str.equals(str)) {
+                    return null;
+                }
+                continue;
             }
             paras.put(part.variable, str);
+        }
+        //在request里放入rest参数
+        for (Map.Entry<String, String> entry : paras.entrySet()) {
+            request.setAttribute(entry.getKey(), entry.getValue());
         }
         //根据请求方法进行判断
         if ("GET".equals(method)) {

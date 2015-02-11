@@ -54,7 +54,7 @@ class RestRoutes {
     String match(String target, HttpServletRequest request) {
         String key = target;
         if (visitPath != null) {
-            key = key.substring(key.length());
+            key = key.substring(visitPath.length());
         }
         for (RestKey restKey : restKeySet) {
             String t = restKey.match(key, request);

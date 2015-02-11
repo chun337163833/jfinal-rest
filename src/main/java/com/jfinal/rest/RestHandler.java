@@ -29,7 +29,7 @@ public class RestHandler extends Handler {
             nextHandler.handle(target, request, response, isHandled);
             return;
         }
-
+        isHandled[0] = true;
         String newTarget = routes.match(target, request);
         if (newTarget == null) {
             if (log.isWarnEnabled()) {
@@ -39,8 +39,6 @@ public class RestHandler extends Handler {
             RenderFactory.me().getErrorRender(404).setContext(request, response).render();
             return;
         }
-
-        isHandled[0] = true;
         nextHandler.handle(newTarget, request, response, isHandled);
     }
 }
