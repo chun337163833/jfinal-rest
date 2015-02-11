@@ -37,7 +37,6 @@ class RestKey {
      * @return
      */
     String match(String target, HttpServletRequest request) {
-        String method = request.getMethod().toUpperCase();
         //将target按斜线拆分成数组，用于匹配
         if (target.startsWith("/")) {
             target = target.substring(1);
@@ -67,36 +66,13 @@ class RestKey {
         for (Map.Entry<String, String> entry : paras.entrySet()) {
             request.setAttribute(entry.getKey(), entry.getValue());
         }
-        //根据请求方法进行判断
-        if ("GET".equals(method)) {
-            if (para == null) {
-                return origin + "/get";
-            } else {
-                return origin + "/get/" + para;
-            }
-        } else if ("POST".equals(method)) {
-            if (para != null) {
-                return null;
-            }
-            return origin + "/post";
-        } else if ("PUT".equals(method)) {
-            if (para == null) {
-                return null;
-            }
-            return origin + "/put/" + para;
-        } else if ("PATCH".equals(method)) {
-            if (para == null) {
-                return null;
-            }
-            return origin + "/patch/" + para;
-        } else if ("DELETE".equals(method)) {
-            if (para == null) {
-                return null;
-            }
-            return origin + "/delete/" + para;
-        } else {
-            return null;
+        //根据请求方法生成新的路径
+        String method = request.getMethod().toLowerCase();
+        String newTarget = origin + "/" + method;
+        if (para != null) {
+            newTarget = newTarget + "/" + para;
         }
+        return target;
     }
 
     @Override
