@@ -26,7 +26,7 @@ public class Config extends JFinalConfig {
     @Override
     public void configRoute(Routes me) {
         //配置路由，三个参数：访问路径（API版本），jfinal路由对象，要扫描的包(包下加了API注解的controller会被扫描)
-        RestKit.buildRoutes("/v1", me, "peak.restful");
+        RestKit.buildRoutes("/v1", me, "peak.v1");
     }
 
     @Override
@@ -126,4 +126,3 @@ public class MessageController extends Controller {
 }
 
 ```
-
